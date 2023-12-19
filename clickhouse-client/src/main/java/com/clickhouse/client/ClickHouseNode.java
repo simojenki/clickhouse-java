@@ -1195,9 +1195,14 @@ public class ClickHouseNode implements Function<ClickHouseNodeSelector, ClickHou
 
     @Override
     public ClickHouseNode apply(ClickHouseNodeSelector t) {
+
+//        if(true) return this;
+
         final ClickHouseNodeManager m = manager.get();
         if (m != null) { // managed
-            return m.apply(m.getNodeSelector());
+            ClickHouseNode node = m.apply(m.getNodeSelector());
+            System.out.println("??? asked node:" + this.getBaseUri() + " for a node, got:" + node.getBaseUri());
+            return node;
         }
 
         if (t != null && t != ClickHouseNodeSelector.EMPTY

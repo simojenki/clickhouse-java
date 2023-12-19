@@ -133,4 +133,9 @@ public class ClickHouseHttpClient extends AbstractClient<ClickHouseHttpConnectio
     public final Class<? extends ClickHouseOption> getOptionClass() {
         return ClickHouseHttpOption.class;
     }
+
+    @Override
+    public String toString() {
+        return "ClickHouseHttpClient{" + this.getServer().getBaseUri() + "}";
+    }
 }

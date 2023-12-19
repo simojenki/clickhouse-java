@@ -1,6 +1,7 @@
 package com.clickhouse.client;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -543,6 +544,14 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
         }
     }
 
+    private void printState(String prefix) {
+        System.out.println(Instant.now() + " " + prefix + " nodes:" + dump(this.nodes) + ", faulty:" + dump(this.faultyNodes));
+    }
+
+    private List<String> dump(LinkedList<ClickHouseNode> nodesToPrint) {
+        return nodesToPrint.stream().map(ClickHouseNode::getAddress).map(it -> it.getHostName() + ":" + it.getPort()).toList();
+    }
+
     /**
      * Checks (faulty) node status.
      */
@@ -557,6 +566,9 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
         boolean checkAll = template.config.getBoolOption(ClickHouseClientOption.CHECK_ALL_NODES);
         int healthyNodeStartIndex = -1;
         lock.readLock().lock();
+
+        printState("check:");
+
         // TODO:
         // 1) minimize the list;
         // 2) detect flaky node and check it again later in a less frequent way
