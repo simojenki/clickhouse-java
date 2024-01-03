@@ -567,6 +567,9 @@ public class ClickHouseRequest<SelfT extends ClickHouseRequest<SelfT>> implement
         ClickHouseNode node = serverRef.get();
         if (node == null) {
             node = server.apply(getClient().getConfig().getNodeSelector());
+            if(server instanceof ClickHouseNode && !((ClickHouseNode) server).getBaseUri().equals(node.getBaseUri())) {
+                System.out.println("???? -> 'server' is a single ClickHouseNode, expected node to be same as server.. server.baseUri=" + ((ClickHouseNode) server).getBaseUri() + ", node.baseUri=" + node.getBaseUri());
+            }
             if (!serverRef.compareAndSet(null, node)) {
                 node = serverRef.get();
             }
