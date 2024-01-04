@@ -544,11 +544,7 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
         }
     }
 
-    private void printState(String prefix) {
-        System.out.println(Instant.now() + " " + prefix + " nodes:" + dump(this.nodes) + ", faulty:" + dump(this.faultyNodes));
-    }
-
-    private List<String> dump(LinkedList<ClickHouseNode> nodesToPrint) {
+    private static List<String> dump(LinkedList<ClickHouseNode> nodesToPrint) {
         return nodesToPrint.stream().map(ClickHouseNode::getAddress).map(it -> it.getHostName() + ":" + it.getPort()).toList();
     }
 
@@ -567,7 +563,7 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
         int healthyNodeStartIndex = -1;
         lock.readLock().lock();
 
-        printState("check:");
+        System.out.println(Instant.now() + " Check -> nodes:" + dump(this.nodes) + ", faulty:" + dump(this.faultyNodes));
 
         // TODO:
         // 1) minimize the list;

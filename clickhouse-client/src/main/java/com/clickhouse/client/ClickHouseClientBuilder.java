@@ -86,11 +86,6 @@ public class ClickHouseClientBuilder {
 
         private final AtomicReference<ClickHouseClient> client;
 
-        @Override
-        public String toString() {
-            return "Agent{client=" + client.get() + '}';
-        }
-
         Agent(ClickHouseClient client, ClickHouseConfig config) {
             this.client = new AtomicReference<>(client != null ? client : new DummyClient(config));
         }
