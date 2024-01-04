@@ -66,14 +66,39 @@ public class LoadBalancerExample {
                         .execute()
                         .get()) {
                     if (response.firstRecord().getValue(0).asInteger() != 1) {
-                        System.out.println(Instant.now() + " " + "ERROR, didn't get 1 back for some reason....");
+                        System.err.println(Instant.now() + " " + "ERROR, didn't get 1 back for some reason....");
+                        System.exit(1);
                     }
                 } catch (Exception e) {
-                    System.out.println(Instant.now() + " " + "ERROR trying to query:" + node.getBaseUri() + ", however client is pointing at:" + client);
+                    System.err.println(Instant.now() + " " + "ERROR:" + e.getMessage());
+//                    e.printStackTrace(System.err);
                 }
             }
             sleep(1000);
             System.out.print(".");
         }
+
+        /*
+        while (true) {
+            try (ClickHouseClient client = ClickHouseClient.newInstance(ClickHouseProtocol.HTTP)) {
+                try (ClickHouseResponse response = client.read(nodes)
+                        .format(ClickHouseFormat.RowBinaryWithNamesAndTypes)
+                        .query("select 1")
+                        .execute()
+                        .get()) {
+                    if (response.firstRecord().getValue(0).asInteger() != 1) {
+                        System.err.println(Instant.now() + " " + "ERROR, didn't get 1 back for some reason....");
+                        System.exit(1);
+                    }
+                } catch (Exception e) {
+                    System.err.println(Instant.now() + " " + "ERROR:" + e.getMessage());
+                    e.printStackTrace(System.err);
+                }
+            }
+            sleep(1000);
+            System.out.print(".");
+        }
+
+         */
     }
 }
