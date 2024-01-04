@@ -56,7 +56,7 @@ public class LoadBalancerExample {
             put(ClickHouseClientOption.CHECK_ALL_NODES.getKey(), "true");
             put(ClickHouseClientOption.AUTO_DISCOVERY.getKey(), "false");
         }});
-
+/*
         while (true) {
             ClickHouseNode node = nodes.apply(ClickHouseNodeSelector.of(ClickHouseProtocol.HTTP));
             try (ClickHouseClient client = ClickHouseClient.newInstance(node.getProtocol())) {
@@ -70,15 +70,14 @@ public class LoadBalancerExample {
                         System.exit(1);
                     }
                 } catch (Exception e) {
-                    System.err.println(Instant.now() + " " + "ERROR:" + e.getMessage());
-//                    e.printStackTrace(System.err);
+                    System.err.println(Instant.now() + " ERROR:" + e.getMessage());
                 }
             }
             sleep(1000);
             System.out.print(".");
         }
+*/
 
-        /*
         while (true) {
             try (ClickHouseClient client = ClickHouseClient.newInstance(ClickHouseProtocol.HTTP)) {
                 try (ClickHouseResponse response = client.read(nodes)
@@ -91,14 +90,11 @@ public class LoadBalancerExample {
                         System.exit(1);
                     }
                 } catch (Exception e) {
-                    System.err.println(Instant.now() + " " + "ERROR:" + e.getMessage());
-                    e.printStackTrace(System.err);
+                    System.err.println(Instant.now() + " ERROR:" + e.getMessage());
                 }
             }
             sleep(1000);
             System.out.print(".");
         }
-
-         */
     }
 }
