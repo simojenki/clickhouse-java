@@ -603,7 +603,7 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
                     }
                 } else {
                     hasFaultyNode = true;
-                    if (healthyNodeStartIndex >= count) {
+                    if (healthyNodeStartIndex != -1 && count >= healthyNodeStartIndex) {
                         update(n, Status.FAULTY);
                     }
                 }
