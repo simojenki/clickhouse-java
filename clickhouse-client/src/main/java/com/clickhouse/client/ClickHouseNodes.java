@@ -571,7 +571,7 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
         try {
             pickNodes(faultyNodes, selector, list, groupSize, currentTime);
             if (checkAll) {
-//                healthyNodeStartIndex = list.size();
+                healthyNodeStartIndex = list.size();
                 pickNodes(nodes, selector, list, groupSize, currentTime);
             }
         } finally {
@@ -580,7 +580,7 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
         }
 
         boolean hasFaultyNode = false;
-//        int count = 0;
+        int count = 0;
         try {
             for (ClickHouseNode node : list) {
                 ClickHouseNode n = node.probe();
@@ -598,16 +598,16 @@ public class ClickHouseNodes implements ClickHouseNodeManager {
                 }
 
                 if (isAlive) {
-//                    if (healthyNodeStartIndex < 0 || count < healthyNodeStartIndex) {
+                    if (healthyNodeStartIndex < 0 || count < healthyNodeStartIndex) {
                         update(n, Status.HEALTHY);
-//                    }
+                    }
                 } else {
                     hasFaultyNode = true;
-//                    if (healthyNodeStartIndex >= count) {
+                    if (healthyNodeStartIndex >= count) {
                         update(n, Status.FAULTY);
-//                    }
+                    }
                 }
-//                count++;
+                count++;
             }
         } catch (Exception e) {
             log.warn("Unexpected error occurred when checking node status", e);
